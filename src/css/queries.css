@@ -1,0 +1,426 @@
+/* rem and em in media queries do NOT depend on the html font-size in media queries!
+Instead 1 rem = 1 em = 16px (or the default browser font-size) -> So our calculations
+need to change a bit. */
+
+/* Also, rem has some problems in some browsers with media queries, so we will
+use em, and we should use always use em in media queries, that is we should use
+em to calculate the breakpoint in the media query NOT the actual CSS rules that
+we specify in the media query */
+
+/********************************************/
+/* BELOW 1344px (Smaller Desktop/Laptop Screens) */
+/********************************************/
+@media (max-width: 84em) {
+    .heading-primary {
+        font-size: 4.4rem;
+    }
+
+    .hero {
+        /* This rem has nothing to do with the one we used to build
+        the media query constraint and works as all the other CSS works
+        i.e. rem here works the same as the rest of our CSS  */
+        max-width: 120rem;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/********************************************/
+/* BELOW 1200px (Landscape Tablets) */
+/********************************************/
+@media (max-width: 75em) {
+    /* If we want to change many things in one go without having to 
+    rewrite a bunch of styles, we can change our base value that the rem
+    references, which is the font-size in our html component */
+    html {
+        /* 9px / 16px = 56.25%, one pixel smaller than before */
+        font-size: 56.25%;
+    }
+
+    .grid {
+        column-gap: 4.8rem;
+        row-gap: 6.4rem;
+    }
+
+    .heading-secondary {
+        /* We still do the calculation as if 1rem was 10px to keep the code
+        consistent */
+        font-size: 3.6rem;
+    }
+
+    .heading-tertiary {
+        font-size: 2.4rem;
+    }
+
+    .header {
+        padding: 0 3.2rem;
+    }
+
+    .main-nav-list {
+        gap: 3.2rem;
+    }
+
+    .hero {
+        gap: 4.8rem;
+    }
+
+    .testimonials-container {
+        padding: 9.6rem 3.2rem;
+    }
+}
+
+/********************************************/
+/* BELOW 944px (Portrait Tablets) */
+/********************************************/
+@media (max-width: 59em) {
+    html {
+        /* 8px / 16px = 0.5 = 50% -> Next step down */
+        font-size: 50%;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 0 8rem;
+        gap: 6.4rem;
+    }
+
+    .hero-text-box,
+    .hero-img-box {
+        /* Because an image is an inline element, this should center it as well */
+        text-align: center;
+    }
+
+    .hero-img {
+        width: 60%;
+    }
+
+    .delivered-meals {
+        justify-content: center;
+        margin-top: 3.2rem;
+    }
+
+    .logos img {
+        height: 2.4rem;
+    }
+
+    .step-number {
+        font-size: 7.4rem;
+    }
+
+    .meal-content {
+        padding: 2.4rem 3.2rem 3.2rem 3.2rem;
+    }
+
+    .section-testimonials {
+        grid-template-columns: 1fr;
+    }
+
+    .meal-title {
+        font-size: 2.2rem;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .cta {
+        /* 3/5 = 60% of the width for the content */
+        /* 2/5 = 40% of the width for the img */
+        grid-template-columns: 3fr 2fr;
+    }
+
+    .cta-form {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-form {
+        margin-top: 1.2rem;
+    }
+
+    /* MOBILE NAVIGATION */
+
+    .btn-mobile-nav {
+        display: block;
+        z-index: 9999;
+    }
+
+    .main-nav {
+        background-color: rgba(255, 255, 255, 0.97);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        /* Doing animations with transform is way more performant 
+        than using left for example */
+        transform: translateX(100%);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        transition: all 0.5s ease-in;
+
+        /* Hide navigation */
+        /* Doesn't allow transitions at all */
+        /* display: none; */
+
+        /* 1) Hide it visually */
+        opacity: 0;
+
+        /* 2) Make it inaccessible to mouse and keyboard */
+        pointer-events: none;
+
+        /* 3) Hide it from screen readers */
+        visibility: hidden;
+    }
+
+    .nav-open .main-nav {
+        /* Show the element again */
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+        /* Doing animations with transform is way more performant 
+        than using left for example */
+        transform: translateX(0);
+    }
+
+    .nav-open .icon-mobile-nav[name="close-outline"] {
+        display: block;
+    }
+
+    .nav-open .icon-mobile-nav[name="menu-outline"] {
+        display: none;
+    }
+
+    .main-nav-list {
+        flex-direction: column;
+        gap: 4.8rem;
+    }
+
+    .main-nav-link:link,
+    .main-nav-link:visited {
+        font-size: 3rem;
+    }
+
+    .list-icon {
+        min-width: 3.2rem;
+    }
+}
+
+/********************************************/
+/* BELOW 752px (Smaller Tablets) */
+/********************************************/
+@media (max-width: 47em) {
+    .heading-secondary {
+        margin-bottom: 4.8rem;
+    }
+
+    .grid--3-cols,
+    .grid--4-cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .diets {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+
+    .diets .heading-tertiary {
+        text-align: center;
+    }
+
+    .diets .list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pricing-plan {
+        width: 100%;
+    }
+
+    .grid--footer {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .nav-col {
+        grid-row: 1;
+        grid-column: span 2;
+        margin-bottom: 3.2rem;
+    }
+
+    .logo-col,
+    .address-col {
+        grid-row: 2;
+        grid-column: span 3;
+    }
+}
+
+/********************************************/
+/* BELOW 608px (Phones) */
+/********************************************/
+@media (max-width: 38em) {
+    .grid {
+        row-gap: 4.8rem;
+    }
+
+    .grid--2-cols,
+    .grid--3-cols,
+    .grid--4-cols {
+        grid-template-columns: 1fr;
+    }
+
+    .section-hero {
+        padding: 2.4rem 0 6.4rem 0;
+    }
+
+    .hero {
+        padding: 0 3.2rem;
+    }
+
+    .btn,
+    .btn:link,
+    .btn:visited {
+        display: block;
+        padding: 2.4rem 1.6rem !important;
+        margin-left: 2.4rem;
+        margin-right: 2.4rem !important;
+    }
+
+    .hero .btn--outline,
+    .hero .btn--outline:link,
+    .hero .btn--outline:visited {
+        margin-top: 1.2rem;
+    }
+
+    .delivered-meals {
+        flex-direction: column;
+    }
+
+    .hero-img {
+        width: 80%;
+    }
+
+    .logos {
+        flex-direction: column;
+        gap: 2.4rem;
+    }
+
+    .heading-featured-in {
+        margin-bottom: 3.2rem;
+    }
+
+    .logos img {
+        height: 3.2rem;
+    }
+
+    .section-how {
+        padding: 4.8rem 0;
+    }
+
+    .step-img-box:nth-child(2) {
+        grid-row: 1;
+    }
+
+    .step-img-box:nth-child(6) {
+        grid-row: 5;
+    }
+
+    .step-img-box {
+        transform: translateY(2.4rem);
+    }
+
+    .testimonials {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+    }
+
+    .cta {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-img-box {
+        height: 32rem;
+        grid-row: 1;
+    }
+
+    .cta-text-box {
+        padding: 3.2rem;
+    }
+
+    .btn--form {
+        margin-left: 0;
+        margin-right: 0 !important;
+        margin-top: 1.2rem;
+    }
+}
+
+/********************************************/
+/* BELOW 400px (Smaller Phones) */
+/********************************************/
+@media (max-width: 25em) {
+    .diets .list {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+}
+
+/********************************************/
+/* BELOW 288px (?) */
+/********************************************/
+@media (max-width: 18em) {
+    html {
+        /* 7px / 16px =  43.75% -> Next step down */
+        font-size: 43.75%;
+    }
+
+    .grid--footer {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-col {
+        grid-row: unset;
+        grid-column: unset;
+        margin-bottom: 3.2rem;
+    }
+
+    .logo-col,
+    .address-col {
+        grid-row: unset;
+        grid-column: unset;
+    }
+}
+
+/********************************************/
+/* BELOW 208px (?) */
+/********************************************/
+@media (max-width: 13em) {
+    html {
+        /* 6px / 16px =  37.5% -> Next step down */
+        font-size: 37.5%;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+}
+
+/* 
+Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Spacing system (px):
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
